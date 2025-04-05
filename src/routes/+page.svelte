@@ -39,7 +39,7 @@
 <main>
   <h1>snas</h1>
   <p>Creative dev & tinkerer. Welcome to my little slice of the web.</p>
-
+  <a href="/about">About</a>
   <ul>
     {#each links as link}
       <li><a href={link.href} target="_blank" rel="noopener noreferrer">{link.name}</a></li>
