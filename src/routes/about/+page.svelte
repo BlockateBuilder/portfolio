@@ -38,11 +38,9 @@
 
 <main>
   <h1>snas</h1>
-  <p>Creative dev & tinkerer. Welcome to my little slice of the web.</p>
+  <p>Hey, I'm snas, also known as ._snas on <a href='discord://-/users/814908440496701460'>Discord</a> or as BlockateBuilder01 on <a href='https://www.roblox.com/users/5494278467/profile'>Roblox</a>.</p>
 
   <ul>
-    {#each links as link}
-      <li><a href={link.href} target="_blank" rel="noopener noreferrer">{link.name}</a></li>
-    {/each}
+    
   </ul>
 </main>
