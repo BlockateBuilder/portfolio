@@ -44,7 +44,6 @@
     bottom: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, #fff 0%, #e0e0e0 100%);
     z-index: -1;
     overflow: hidden;
   }
@@ -54,7 +53,7 @@
     bottom: 0;
     width: 150%;
     height: 20%;
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(200, 200, 200, 0.3);
     border-radius: 100%;
     animation: wave-animation 10s linear infinite;
     overflow: hidden;
