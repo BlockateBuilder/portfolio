@@ -31,8 +31,8 @@
 
 <main>
   <h1>Projects</h1>
-  <p>Some projects are in this <a href="https://github.com/BlockateBuilder/Roblox-Projects" target="_blank">github repository</a>, some are also in video form <a href="https://www.youtube.com/@RblxPf-n3t" target="_blank">here</a>.</p>
-  <p>The rest are listed here:</p>
+  <p>Some projects are in this <a href="https://github.com/BlockateBuilder/Roblox-Projects" target="_blank">github repository</a>, some are also in video form <a href="https://www.youtube.com/@RblxPf-n3t" target="_blank">here</a>.<br>
+    The rest are listed here:</p>
   <div class="space"></div>
   <a href="https://create.roblox.com/store/asset/116112656702972" target="_blank">RemoteAnalyser</a>
   <p>RemoteAnalyserTool (RAT) is a Roblox model which can be required by anyone in-game to show remoteEvents being fired on every client.</p>

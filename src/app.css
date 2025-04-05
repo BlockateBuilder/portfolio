@@ -5,7 +5,7 @@ body {
   src: url(/portfolio/static/fonts/OpenDyslexic3-Regular.ttf) format('truetype');
   font-weight: normal;
   font-style: normal;
-  background-color: #888888;
+  background-color: #bebebe;
   overflow-x: hidden;  /* Prevent horizontal scroll */
 }
 
