@@ -1,4 +1,6 @@
 <script>
+  import '../app.css';
+
   const links = [
     { name: 'GitHub', href: 'https://github.com/blockatebuilder' },
     { name: 'Projects', href: '/projects' },
