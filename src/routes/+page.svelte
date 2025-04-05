@@ -46,16 +46,18 @@
     height: 100%;
     background: linear-gradient(to bottom, #fff 0%, #e0e0e0 100%);
     z-index: -1;
+    overflow: hidden;
   }
 
   .wave {
     position: absolute;
     bottom: 0;
-    width: 200%;
+    width: 150%;
     height: 20%;
     background: rgba(255, 255, 255, 0.5);
     border-radius: 100%;
     animation: wave-animation 10s linear infinite;
+    overflow: hidden;
   }
   @keyframes wave-animation {
     0% {
