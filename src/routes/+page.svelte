@@ -1,9 +1,8 @@
 <script>
   const links = [
-    { name: 'GitHub', href: 'https://github.com/yourname' },
-    { name: 'Twitter', href: 'https://twitter.com/yourhandle' },
+    { name: 'GitHub', href: 'https://github.com/blockatebuilder' },
     { name: 'Projects', href: '/projects' },
-    { name: 'Contact', href: 'mailto:you@example.com' }
+    { name: 'Discord', href: 'discord://-/users/814908440496701460'}
   ];
 </script>
 
