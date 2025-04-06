@@ -1,5 +1,5 @@
 <script>
-
+  import '../app.css';
   const links = [
     { name: 'GitHub', href: 'https://github.com/blockatebuilder' },
     { name: 'Discord', href: 'discord://-/users/814908440496701460'}
@@ -33,12 +33,18 @@
     color: #0070f3;
   }
 
+  .aboutLink {
+    display: inline-block;
+    margin-top: 1rem;
+    font-weight: 500;
+  }
+
 </style>
 
 <main>
   <h1>snas</h1>
   <p>Roblox Scripter & Developer with multiple years of experience</p>
-  <a href="/about">About</a>
+  <a class='aboutLink' href="/about">About me</a>
   <ul>
     {#each links as link}
       <li><a href={link.href} target="_blank" rel="noopener noreferrer">{link.name}</a></li>
