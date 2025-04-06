@@ -2,7 +2,6 @@
 
   const links = [
     { name: 'GitHub', href: 'https://github.com/blockatebuilder' },
-    { name: 'Projects', href: '/projects' },
     { name: 'Discord', href: 'discord://-/users/814908440496701460'}
   ];
 </script>
@@ -44,5 +43,6 @@
     {#each links as link}
       <li><a href={link.href} target="_blank" rel="noopener noreferrer">{link.name}</a></li>
     {/each}
+    <li><a href='/projects' rel="noopener noreferrer">Projects</a></li>
   </ul>
 </main>
