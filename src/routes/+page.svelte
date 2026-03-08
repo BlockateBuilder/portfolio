@@ -1,168 +1,282 @@
-<script>
-  import '../app.css';
-  import { onMount } from 'svelte';
+<html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&amp;family=DM+Sans:wght@300;400;500&amp;display=swap" rel="stylesheet">
 
-  const links = [
-    { name: 'GitHub', href: 'https://github.com/blockatebuilder' },
-    { name: 'Discord', href: 'discord://-/users/814908440496701460' },
-    { name: 'Projects', href: '/projects' }
-  ];
-
-  onMount(() => {
-    const canvas = document.getElementById('ant-canvas');
-    const ctx = canvas.getContext('2d');
-
-    const cellSize = 4;
-    const cols = Math.floor(window.innerWidth / cellSize);
-    const rows = Math.floor(window.innerHeight / cellSize);
-    canvas.width = cols * cellSize;
-    canvas.height = rows * cellSize;
-
-    const grid = new Array(cols * rows).fill(0);
-
-    const ants = [
-      { x: cols / 2, y: rows / 2, dir: 0 },
-      { x: cols / 2 + 10, y: rows / 2, dir: 0 },
-      { x: cols / 2 - 10, y: rows / 2, dir: 0 }
-    ];
-
-    let prevCenter = getCenter(ants);
-
-    function stepAnt(ant) {
-      const x = Math.floor(ant.x);
-      const y = Math.floor(ant.y);
-      const index = y * cols + x;
-      const current = grid[index];
-
-      // Turn based on current cell color
-      const turnRight = current === 0;
-      ant.dir = (ant.dir + (turnRight ? 1 : 3)) % 4;
-
-      // Flip color: white <-> black
-      grid[index] = current === 0 ? 1 : 0;
-
-      // Move forward
-      switch (ant.dir) {
-        case 0: ant.y = (ant.y - 1 + rows) % rows; break;
-        case 1: ant.x = (ant.x + 1) % cols; break;
-        case 2: ant.y = (ant.y + 1) % rows; break;
-        case 3: ant.x = (ant.x - 1 + cols) % cols; break;
-      }
+  <style>
+    /* =============================================
+       CSS CUSTOM PROPERTIES (variables)
+       Change these to instantly retheme the whole site!
+    ============================================= */
+    :root {
+      --color-bg:       #0f0f0f;
+      --color-surface:  #1a1a1a;
+      --color-accent:   #835df5;   /* ← try changing this to any color you like */
+      --color-text:     #e8e8e8;
+      --color-muted:    #888;
+      --font-display:   'DM Serif Display', serif;
+      --font-body:      'DM Sans', sans-serif;
+      --max-width:      1100px;
+      --radius:         12px;
     }
 
-    function getCenter(ants) {
-      const cx = ants.reduce((sum, a) => sum + a.x, 0) / ants.length;
-      const cy = ants.reduce((sum, a) => sum + a.y, 0) / ants.length;
-      return {
-        x: cx * cellSize,
-        y: cy * cellSize
-      };
+    /* =============================================
+       RESET & BASE STYLES
+       Browsers have their own default styles — this
+       evens the playing field.
+    ============================================= */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
-    function animate() {
-      for (let i = 0; i < 10; i++) {
-        ants.forEach(stepAnt);
-        const newCenter = getCenter(ants);
-
-        ctx.strokeStyle = 'rgba(0, 0, 0, 0.4)';
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(prevCenter.x, prevCenter.y);
-        ctx.lineTo(newCenter.x, newCenter.y);
-        ctx.stroke();
-
-        prevCenter = newCenter;
-      }
-
-      requestAnimationFrame(animate);
+    body {
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      font-family: var(--font-body);
+      font-weight: 300;
+      line-height: 1.7;
     }
 
-    // Start with white canvas
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    /* =============================================
+       NAVIGATION
+       <nav> is a semantic tag — it tells browsers
+       this is site navigation, not just any links.
+    ============================================= */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid #222;
+    }
 
-    animate();
-  });
-</script>
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      color: var(--color-accent);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      list-style: none;      /* removes bullet points */
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      color: var(--color-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* =============================================
+       HERO SECTION
+       The big intro area at the top of the page.
+    ============================================= */
+    .hero {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 6rem 2rem 4rem;
+    }
+
+    .hero-label {
+      color: var(--color-accent);
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 6vw, 5rem);  /* clamp = responsive font size */
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 em {
+      color: var(--color-accent);
+      font-style: normal;
+    }
+
+    .hero-bio {
+      max-width: 520px;
+      color: var(--color-muted);
+      font-size: 1.1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .btn {
+      display: inline-block;
+      background: var(--color-accent);
+      color: #0f0f0f;
+      padding: 0.75rem 1.75rem;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    /* =============================================
+       ABOUT SECTION
+       <section> groups related content together.
+    ============================================= */
+    .about {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 4rem 2rem;
+      border-top: 1px solid #222;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .about p {
+      max-width: 600px;
+      color: var(--color-muted);
+      font-size: 1.05rem;
+    }
+
+    /* =============================================
+       PROJECTS SECTION
+       Simple cards laid out in a row for now —
+       in Stage 2 we'll use CSS Grid to make this
+       look much better!
+    ============================================= */
+    .projects {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 4rem 2rem;
+      border-top: 1px solid #222;
+    }
+
+    .project-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .project-card {
+      background: var(--color-surface);
+      border: 1px solid #2a2a2a;
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      flex: 1 1 280px;         /* flex-grow, flex-shrink, min width */
+    }
+
+    .project-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .project-card p {
+      color: var(--color-muted);
+      font-size: 0.95rem;
+    }
+
+    .project-tag {
+      display: inline-block;
+      background: #252525;
+      color: var(--color-accent);
+      font-size: 0.75rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      margin-top: 1rem;
+      margin-right: 0.25rem;
+    }
+
+    /* =============================================
+       FOOTER
+       <footer> is a semantic tag for page footer.
+    ============================================= */
+    footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      color: var(--color-muted);
+      font-size: 0.85rem;
+      border-top: 1px solid #222;
+      margin-top: 4rem;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <a href="@" class="nav-logo" style="font-size: 30px;">rhurt</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <header class="hero">
+    <p class="hero-label">👋 Hello, I'm</p>
+    <h1>A developer who<br>loves <em>building things</em></h1>
+    <p class="hero-bio">
+      I'm a web developer with a passion for clean design and thoughtful experiences.
+      Currently available for freelance work and collaborations.
+    </p>
+    <a href="#projects" class="btn">See my work</a>
+  </header>
+
+  <!-- ABOUT SECTION -->
+  <section class="about" id="about">
+    <h2 class="section-title">About me</h2>
+    <p>
+      I love turning ideas into real things on the internet. When I'm not coding,
+      you'll find me hiking, reading, or tinkering with side projects. I believe
+      great design is about solving problems beautifully.
+    </p>
+  </section>
+
+  <!-- PROJECTS SECTION -->
+  <section class="projects" id="projects">
+    <h2 class="section-title">Projects</h2>
+    <div class="project-list">
+
+      <article class="project-card">
+        <h3>Project One</h3>
+        <p>A short description of what this project does and why it's interesting.</p>
+        <span class="project-tag">HTML</span>
+        <span class="project-tag">CSS</span>
+      </article>
+
+      <article class="project-card">
+        <h3>Project Two</h3>
+        <p>A short description of what this project does and why it's interesting.</p>
+        <span class="project-tag">JavaScript</span>
+        <span class="project-tag">API</span>
+      </article>
+
+      <article class="project-card">
+        <h3>Project Three</h3>
+        <p>A short description of what this project does and why it's interesting.</p>
+        <span class="project-tag">Design</span>
+        <span class="project-tag">CSS</span>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="contact">
+    <p>Built by YourName · <a href="mailto:you@email.com" style="color: var(--color-accent);">you@email.com</a></p>
+  </footer>
 
 
-<style>
-  body {
-    margin: 0;
-    overflow: hidden;
-    background: #f8f8f8;
-  }
-
-  canvas#ant-canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: -1;
-    background: white;
-  }
-
-  main {
-    max-width: 700px;
-    margin: auto;
-    padding: 4rem 1rem;
-    font-family: system-ui, sans-serif;
-    color: #333;
-    position: relative;
-    z-index: 1;
-  }
-
-  h1 {
-    font-size: 3rem;
-    margin-bottom: 0.5rem;
-  }
-
-  p {
-    font-size: 1.25rem;
-    color: #555;
-    margin-bottom: 1.5rem;
-  }
-
-  a {
-    text-decoration: none;
-    color: #0070f3;
-    transition: color 0.2s ease;
-  }
-
-  a:hover {
-    color: #0051a3;
-  }
-
-  ul {
-    list-style: none;
-    padding: 0;
-    margin-top: 2rem;
-  }
-
-  li {
-    margin: 0.75rem 0;
-  }
-
-  .about-link {
-    display: inline-block;
-    margin-top: 1rem;
-    font-weight: 500;
-  }
-</style>
-
-<canvas id="ant-canvas"></canvas>
-
-<main>
-  <h1>snas</h1>
-  <p>Experienced Roblox Scripter & Developer specializing in game mechanics, systems, and custom tools.</p>
-  <a class="about-link" href="/about">Learn more about me →</a>
-
-  <ul>
-    {#each links as link}
-      <li>
-        <a href={link.href} target="_blank" rel="noopener noreferrer">
-          {link.name}
-        </a>
-      </li>
-    {/each}
-  </ul>
-</main>
+</body></html>
